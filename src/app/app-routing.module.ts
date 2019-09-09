@@ -17,6 +17,10 @@ import {MatMenuModule} from '@angular/material/menu';
 import {MatButtonModule} from '@angular/material/button';
 import {MatTableModule} from '@angular/material/table';
 import { DatePipe } from '@angular/common';
+import { ViewEventsComponent } from './view-events/view-events.component';
+import { FullCalendarModule} from '@fullcalendar/angular';
+
+
 export const RouterTable: Routes = [
   {path : '', 
   component : ClientItineraryComponent},
@@ -29,6 +33,10 @@ export const RouterTable: Routes = [
     component : ViewClientComponent
   },
   {
+    path :'viewevents/:clientId' , 
+    component : ViewEventsComponent
+  },
+  {
     path :'**' , 
     component : NotFoundComponent
   }
@@ -36,10 +44,11 @@ export const RouterTable: Routes = [
 
 @NgModule({
   imports: [RouterModule, CommonModule,ReactiveFormsModule,BrowserAnimationsModule,MatCheckboxModule,MatInputModule,MatDatepickerModule,MatNativeDateModule,
-    MatStepperModule,FormsModule,ReactiveFormsModule,MatSelectModule,MatMenuModule,MatButtonModule,MatTableModule],
-  declarations :[HomeComponent, ClientItineraryComponent, ViewClientComponent,NotFoundComponent],
+    MatStepperModule,FormsModule,ReactiveFormsModule,MatSelectModule,MatMenuModule,MatButtonModule,MatTableModule,FullCalendarModule],
+
+  declarations :[HomeComponent, ClientItineraryComponent, ViewClientComponent,NotFoundComponent,ViewEventsComponent],
   exports: [HomeComponent, ClientItineraryComponent, ViewClientComponent,NotFoundComponent,BrowserAnimationsModule,MatCheckboxModule,MatInputModule,MatDatepickerModule,MatNativeDateModule,
-    MatStepperModule,FormsModule,ReactiveFormsModule,MatSelectModule,MatMenuModule,MatButtonModule,MatTableModule,DatePipe],
+    MatStepperModule,FormsModule,ReactiveFormsModule,MatSelectModule,MatMenuModule,MatButtonModule,MatTableModule,DatePipe,ViewEventsComponent],
   schemas:[CUSTOM_ELEMENTS_SCHEMA],
   providers: [DatePipe],
   

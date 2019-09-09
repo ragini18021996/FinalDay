@@ -3,12 +3,16 @@ import { HttpClient,HttpHeaders, HttpParams, HttpResponse, HttpRequest } from '@
 import { Observable, throwError } from "rxjs";
  
 import {catchError,map} from 'rxjs/operators';
-import {Client} from '../Client';
+
+import { Client } from './client';
+import { Events } from './events';
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
   clients:Client[];
+  events: Events[];
+  event: Events;
   constructor(private _http : HttpClient) { 
 
   }
@@ -22,14 +26,32 @@ export class ApiService {
     console.log("In Service  View .... ")
     return this._http.get<Client[]>("/EventBasedCalendar/view");
   }
+  getEventsById(clientId: number): Observable<Events[]>
+{
+  return this._http.get<Events[]>("/EventBasedCalendar/viewClientEvent/" + clientId);
+}
 
   InsertClient(client : Client) : Observable<any>
   {
-    console.log("In Serv Insert" + client.clientName );
+    
     console.log('Hello I m here');
-// return this._http.post("/EventBasedCalendar/submitOnDb", client)
+    console.log("In Service " + client);
+ 
 
 return this._http.post("/EventBasedCalendar/submitOnDb", client)
+.pipe(
+  map((res:Response)=>res),
+  catchError(this.errorhandler));
+  };
+
+  InsertEvents(events : Event) : Observable<any>
+  {
+    
+    console.log('Hello I m inserting events');
+    console.log("In Service " + events);
+ 
+
+return this._http.post("/EventBasedCalendar/addEvents",events)
 .pipe(
   map((res:Response)=>res),
   catchError(this.errorhandler));

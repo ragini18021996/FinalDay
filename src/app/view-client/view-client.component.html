@@ -13,15 +13,16 @@
      
     </tr>
 
-  <tr *ngFor="let client of clients;index as i">
-           <td>{{i}}</td>
+  <tr *ngFor="let client of clients;index as i ">
+           <td>{{i+1}}</td>
           <td>{{client.clientName}}</td>
           <td>{{client.projectName}}</td>
-          <td>{{client.stringarrive}}</td>
-          <td>{{client.stringdepart}}</td>
-          <td>{{client.agenda}}</td>
+          <td>{{client.arrivalDate|date:'dd/MM/yyyy'}}</td>
+          <td>{{client.deptDate|date:'dd/MM/yyyy'}}</td>
+          <td>{{client.agenda}}</td> 
           <td>{{client.account}}</td>
          <!-- <td><a class="nav-link" [routerLink]="['/searchEmployeeName',Employee.Id]">View Events</a></td> -->
+         <td><a [routerLink]="['/viewevents',client.clientId]">View Events</a></td>
           </tr>  
       
       </table>
