@@ -1,0 +1,155 @@
+<mat-horizontal-stepper [linear]="isLinear" #stepper>
+  <mat-step [stepControl]="firstFormGroup">
+    <form [formGroup]="firstFormGroup" >
+      <ng-template matStepLabel>Fill out Client Details</ng-template>
+      
+      <mat-form-field>
+        <input matInput placeholder="Enter Client name" formControlName="clientName" (change)=Name($event)><br>
+      </mat-form-field><br>
+      <mat-form-field>
+        <input matInput placeholder="Enter project name" formControlName="projectName" (change)=ProjectName($event)><br>
+      </mat-form-field><br>
+      <mat-form-field>
+        <input matInput [matDatepicker]="picker" (dateChange)="addEvent1('change', $event)"placeholder="Choose a Arrival date">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+
+
+      <mat-form-field>
+        <input matInput [matDatepicker]="picker2" (dateChange)="addEvent('change', $event)" placeholder="Choose a Departure date">
+         <mat-datepicker-toggle matSuffix [for]="picker2" ></mat-datepicker-toggle> 
+        <mat-datepicker #picker2></mat-datepicker>
+      </mat-form-field><br><br>
+       <mat-form-field>
+        <mat-label>Account</mat-label>
+        <select matNativeControl required (change)="AccountDropdown($event)">
+          <option value="select">select</option>
+          <option value="Citi">Citi</option>
+          <option value="HDFC">HDFC</option>
+          <option value="Royak bank">Royak bank</option>
+          <option value="Bank of canada">Bank of canada</option>
+          <option value="Others">Others</option>
+        </select>
+</mat-form-field> <br><br>
+      <div style="margin-top:100px">
+        <button mat-button matStepperNext>Next</button>
+      </div>
+      
+    </form>
+  </mat-step>
+  <mat-step [stepControl]="secondFormGroup">
+    <form [formGroup]="secondFormGroup">
+      <ng-template matStepLabel>Fill out Event Details</ng-template>
+      <!-- <label>Choose your Event</label> -->
+        <button mat-button [matMenuTriggerFor]="events">Select Events</button>
+
+        <mat-menu #events="matMenu">
+          <button mat-menu-item [matMenuTriggerFor]="Cab">Cab</button>
+          <button mat-menu-item [matMenuTriggerFor]="Hotel">Hotel</button>
+          <button mat-menu-item [matMenuTriggerFor]="Meeting">Meeting</button>
+          <button mat-menu-item [matMenuTriggerFor]="Meal">Meal</button>
+        </mat-menu>
+        
+        <mat-menu #Cab="matMenu" >
+          <button mat-menu-item>Airport To Hotel</button>
+          <button mat-menu-item>Hotel To Airport</button>
+          <button mat-menu-item>Hotel To Office</button>
+          <button mat-menu-item>Office To Hotel</button>
+        </mat-menu>
+        
+        <mat-menu #Hotel="matMenu">
+          <button mat-menu-item>Radisson Noida</button>
+          <button mat-menu-item>Hotel Noida International</button>
+          <button mat-menu-item>Ginger Noida City Centre</button>
+          <button mat-menu-item>Fortune Inn Grazia </button>
+        </mat-menu>
+        
+        <mat-menu #Meeting="matMenu">
+          <button mat-menu-item>Focus</button>
+          <button mat-menu-item>Innovate</button>
+          <button mat-menu-item>Aspire</button>
+          <button mat-menu-item>Conclave</button>
+        </mat-menu>
+        <mat-menu #Meal="matMenu">
+          <button mat-menu-item>Unit-I Cafeteria</button>
+          <button mat-menu-item>Unit-I Cafeteria</button>
+        </mat-menu><br><br>
+        <mat-form-field>
+          <input matInput [matDatepicker]="picker3" placeholder="Choose a Departure date" (dateChange)=" getValues($event)">
+           <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle> 
+          <mat-datepicker #picker3></mat-datepicker>
+        </mat-form-field>
+        
+        <button (click)="openDialog();">
+          Select Time
+      </button><br>
+          
+          <mat-form-field>
+            <input matInput [matDatepicker]="picker4" placeholder="Choose a Departure date" (dateChange)=" getValues1($event)">
+             <mat-datepicker-toggle matSuffix [for]="picker4"></mat-datepicker-toggle> 
+            <mat-datepicker #picker4></mat-datepicker>
+          </mat-form-field>
+          
+          <button (click)="openDialog();">
+            Select Time
+        </button><br>
+        <button mat-button (click)="buttonEvent()">Add Event</button>
+        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+          <!--- Note that these columns can be defined in any order.
+                The actual rendered columns are set as a property on the row definition" -->
+        
+          <!-- Position Column -->
+          <ng-container matColumnDef="event">
+            <th mat-header-cell *matHeaderCellDef> Event </th>
+            <td mat-cell *matCellDef="let element"> {{element.event}} </td>
+          </ng-container>
+        
+          <!-- Name Column -->
+          <ng-container matColumnDef="eventStartTimeDate">
+            <th mat-header-cell *matHeaderCellDef> Start Date And Time </th>
+            <td mat-cell *matCellDef="let element"> {{element.eventStartTimeDate}} </td>
+          </ng-container>
+        
+          <!-- Weight Column -->
+          <ng-container matColumnDef="eventEndTimeDate">
+            <th mat-header-cell *matHeaderCellDef> End Date And Time  </th>
+            <td mat-cell *matCellDef="let element"> {{element.eventEndTimeDate}} </td>
+          </ng-container>
+        
+          Symbol Column
+          <ng-container matColumnDef="symbol">
+            <th mat-header-cell *matHeaderCellDef> Symbol </th>
+            <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
+          </ng-container>
+        
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+        
+        
+  
+  
+
+      <div style="margin-top:80px"></div>
+      
+      <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button matStepperNext>Next</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step>
+    <ng-template matStepLabel>Done</ng-template>
+    You are now done.
+    <div>
+      <button mat-button matStepperPrevious>Back</button>
+      <button mat-button (click)="stepper.reset()">Reset</button>
+       <button mat-button (click)="OnInsertClient()">Submit</button> 
+       
+    </div>
+    
+  </mat-step>
+</mat-horizontal-stepper>
+<p>{{clientName}}</p>
